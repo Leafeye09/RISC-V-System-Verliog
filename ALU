@@ -1,0 +1,24 @@
+// ALU file is here that can determine all arithmetic values that can be used in the RISC
+module alu  #(parameter N = 32)(
+  input  logic [N-1:0] op1,
+  input  logic [N-1:0] op2,
+  input  logic [3:0]  alu_ctrl,
+  output logic [N-1:0] result
+);
+
+    always_comb begin
+        case (alu_ctrl)
+            4'b0000: result = op1 + op2;                      // ADD
+            4'b0001: result = op1 - op2;                      // SUB
+            4'b0010: result = op1 & op2;                      // AND
+            4'b0011: result = op1 | op2;                      // OR
+            4'b0100: result = op1 ^ op2;                      // XOR
+            4'b0101: result = op1 << op2[4:0];                // SLL(shift left logic)
+            4'b0110: result = op1 >> op2[4:0];                // SRL(shift right logic)
+            4'b0111: result = $signed(op1) >>> op2[4:0];      // SRA (shift right arithemtiv)
+            4'b1000: result = ($signed(op1) < $signed(op2)) ? {{(N-1){1'b0}}, 1'b1} : {N{1'b0}}; //SRT
+            4'b1001: result = (op1 < op2) ? {{(N-1){1'b0}}, 1'b1} : {N{1'b0}}; // Logical STL
+          default: result = {N{1'b0}};      // default to zero when alu_ctrl unrecognized
+        endcase
+    end
+endmodule

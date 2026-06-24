@@ -117,5 +117,5 @@ On the Basys-3:
 - UVM testbench environment
 - Data memory (DMEM) for full load/store support
 - Hazard detection and forwarding unit
-# \- Hazard detection and forwarding unit
+- Hazard detection and forwarding unit
 
